@@ -1,22 +1,21 @@
 <template>
 	<section class="py-6 sm:py-12 dark:bg-gray-100 dark:text-gray-800">
 		<div class="container p-6 mx-auto space-y-8" bis_skin_checked="1">
-			<div class="space-y-5 text-center" bis_skin_checked="1">
+			<div class="space-y-6 text-center" bis_skin_checked="1">
         <div class="px-4 py-10 text-center sm:px-6 lg:px-8">
           <h1 class="text-4xl font-bold tracking-tight text-gray-900">{{ projectData.title }}</h1>
           <p class="mx-auto mt-4 max-w-xl text-base text-gray-500">{{ projectData.description }}</p>
         </div>
-        <ProjectFilter />
 			</div>
 			<div class="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4" bis_skin_checked="1">
-				<article class="flex flex-col dark:bg-gray-50" v-for="project in projectLists" :key="project.project_Id" :id="project.project_Id">
+				<article class="shadow-sm hover:shadow-lg flex flex-col dark:bg-gray-50" v-for="project in projectLists" :key="project.project_Id" :id="project.project_Id" v-show="project.show">
 					<a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum">
-						<img alt="" class="object-cover w-full h-52 dark:bg-gray-500" src="https://source.unsplash.com/200x200/?fashion?1">
+						<img alt="" class="object-cover w-full h-52 dark:bg-gray-500" :src="project.img">
 					</a>
 					<div class="flex flex-col flex-1 p-6" bis_skin_checked="1">
 						<a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum"></a>
 						<a rel="noopener noreferrer" href="" class="text-xs tracking-wider uppercase hover:underline dark:text-violet-600">{{ project.project_Type }}</a>
-						<a :href="project.project_Link"><h3 class="hover:underline flex-1 py-2 text-lg font-semibold leading-snug">{{ project.project_Name }}</h3></a>
+						<a target="_blank" :href="project.project_Link"><h3 class="hover:underline flex-1 py-2 text-lg font-semibold leading-snug">{{ project.project_Name }}</h3></a>
             
 						<!-- <div class="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-600" bis_skin_checked="1">
 							<span>June 1, 2020</span>
@@ -25,6 +24,10 @@
 					</div>
 				</article>
 			</div>
+
+      <div class="flex justify-center">
+        <button type="button" class="rounded-md bg-indigo-600 px-6 py-4 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">More Projects</button>
+      </div>
 		</div>
 	</section>
 </template>
@@ -33,7 +36,6 @@
   import { ref, onMounted } from 'vue';
   import { db } from '../../firebase/firebase.js';
   import { addDoc, collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
-  import ProjectFilter from '../ProjectFilter.vue';
 
   const projectData = ref({
     title: '',
@@ -72,6 +74,8 @@
           project_Name: doc.data().project_name,
           project_Link: doc.data().project_link,
           project_Type: doc.data().project_type,
+          show: doc.data().show,
+          img: doc.data().project_img,
         };
         projects.push(project);
       });

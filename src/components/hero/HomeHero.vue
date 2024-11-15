@@ -5,16 +5,7 @@
         <div class="px-6 lg:px-0 lg:pt-4">
           <div class="mx-auto max-w-2xl">
             <div class="max-w-lg">
-              <div class="mt-24 sm:mt-32 lg:mt-16">
-                <a href="#" class="inline-flex space-x-6">
-                  <span class="rounded-full bg-indigo-600/10 px-3 py-1 text-sm/6 font-semibold text-indigo-600 ring-1 ring-inset ring-indigo-600/10">What's new</span>
-                  <span class="inline-flex items-center space-x-2 text-sm/6 font-medium text-gray-600">
-                    <span>Just shipped v0.1.0</span>
-                    <ChevronRightIcon class="size-5 text-gray-400" aria-hidden="true" />
-                  </span>
-                </a>
-              </div>
-              <h1 class="mt-10 text-pretty text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Supercharge your web app</h1>
+              <h1 class="mt-10 text-pretty text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Kissel James Paalaman</h1>
               <p class="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.</p>
               <div class="mt-10 flex items-center gap-x-6">
                 <a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Documentation</a>
@@ -33,12 +24,14 @@
                   <div class="w-screen overflow-hidden rounded-tl-xl bg-gray-900">
                     <div class="flex bg-gray-800/40 ring-1 ring-white/5">
                       <div class="-mb-px flex text-sm/6 font-medium text-gray-400">
-                        <div class="border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white">NotificationSetting.jsx</div>
-                        <div class="border-r border-gray-600/10 px-4 py-2">App.jsx</div>
+                        <div class="border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white">tailwind.config.js</div>
+                        <div class="border-r border-gray-600/10 px-4 py-2">Welcome.vue</div>
                       </div>
                     </div>
-                    <div class="px-6 pb-14 pt-6">
-                      <!-- Your code example -->
+                    <div class="px-6 whitespace-pre-wrap">
+                      <!-- Code Here -->
+<code v-html="highlightedCode" class="text-wrap"></code>
+                      <!-- CODE -->
                     </div>
                   </div>
                 </div>
@@ -54,5 +47,20 @@
 </template>
 
 <script setup>
-  import { ChevronRightIcon } from '@heroicons/vue/20/solid'
+import { ref } from 'vue';
+
+const show = ref(true);
+
+// Manually add color classes to specific parts of the code
+const highlightedCode = ref(`<span class="text-red-400">&lt;template&gt;</span>
+  <span class="text-red-400">&lt;section</span> <span class="text-purple-400">class</span><span class="text-blue-400">="hero bg-gray-200"</span><span class="text-red-400">&gt;</span>
+    <span class="text-red-400">&lt;div</span> <span class="text-purple-400">class</span><span class="text-blue-400">="hero-content text-center"</span><span class="text-red-400">&gt;</span>
+      <span class="text-red-400">&lt;h1</span> <span class="text-purple-400">class</span><span class="text-blue-400">="text-4xl font-bold mb-4"</span><span class="text-red-400">&gt;</span><span class="text-gray-300">{{ welcomeMsg }}</span><span class="text-red-400">&lt;/h1&gt;</span>
+    <span class="text-red-400">&lt;/div&gt;</span>
+  <span class="text-red-400">&lt;/section&gt;</span>
+<span class="text-red-400">&lt;/template&gt;</span>
+
+<span class="text-red-400">&lt;script setup&gt;</span>
+  <span class="text-purple-400">const</span><span class="text-gray-300"> welcomeMsg = </span></span><span class="text-green-400">"Welcome to Kissel James Portfolio"</span>;
+<span class="text-red-400">&lt;/script&gt;</span>`);
 </script>

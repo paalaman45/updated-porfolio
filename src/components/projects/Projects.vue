@@ -1,26 +1,39 @@
 <template>
-  <div class="bg-gray-900 py-24 sm:py-32">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto">
-        <h2 class="text-pretty text-4xl font-semibold tracking-tight text-white sm:text-5xl">{{ projectData.title }}</h2>
-        <p class="mt-6 text-lg/8 text-gray-300">{{ projectData.description }}</p>
-      </div>
-      <ul role="list" class="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4">
-        <li v-for="project in projectLists" :key="project.project_Name">
-          <img class="aspect-[14/13] w-full rounded-2xl object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80" alt="" />
-          <h3 class="mt-6 text-lg/8 font-semibold tracking-tight text-white">{{ project.project_Name }}</h3>
-          <!-- <p class="text-base/7 text-gray-300">{{ person.role }}</p>
-          <p class="text-sm/6 text-gray-500">{{ person.location }}</p> -->
-        </li>
-      </ul>
-    </div>
-  </div>
+	<section class="py-6 sm:py-12 dark:bg-gray-100 dark:text-gray-800">
+		<div class="container p-6 mx-auto space-y-8" bis_skin_checked="1">
+			<div class="space-y-5 text-center" bis_skin_checked="1">
+        <div class="px-4 py-10 text-center sm:px-6 lg:px-8">
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900">{{ projectData.title }}</h1>
+          <p class="mx-auto mt-4 max-w-xl text-base text-gray-500">{{ projectData.description }}</p>
+        </div>
+        <ProjectFilter />
+			</div>
+			<div class="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4" bis_skin_checked="1">
+				<article class="flex flex-col dark:bg-gray-50" v-for="project in projectLists" :key="project.project_Id" :id="project.project_Id">
+					<a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum">
+						<img alt="" class="object-cover w-full h-52 dark:bg-gray-500" src="https://source.unsplash.com/200x200/?fashion?1">
+					</a>
+					<div class="flex flex-col flex-1 p-6" bis_skin_checked="1">
+						<a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum"></a>
+						<a rel="noopener noreferrer" href="" class="text-xs tracking-wider uppercase hover:underline dark:text-violet-600">{{ project.project_Type }}</a>
+						<a :href="project.project_Link"><h3 class="hover:underline flex-1 py-2 text-lg font-semibold leading-snug">{{ project.project_Name }}</h3></a>
+            
+						<!-- <div class="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-600" bis_skin_checked="1">
+							<span>June 1, 2020</span>
+							<span>2.1K views</span>
+						</div> -->
+					</div>
+				</article>
+			</div>
+		</div>
+	</section>
 </template>
 
 <script setup>
   import { ref, onMounted } from 'vue';
   import { db } from '../../firebase/firebase.js';
   import { addDoc, collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
+  import ProjectFilter from '../ProjectFilter.vue';
 
   const projectData = ref({
     title: '',
@@ -55,8 +68,10 @@
 
       querySnapshot.forEach((doc) => {
         const project = {
+          project_Id: doc.id,
           project_Name: doc.data().project_name,
           project_Link: doc.data().project_link,
+          project_Type: doc.data().project_type,
         };
         projects.push(project);
       });

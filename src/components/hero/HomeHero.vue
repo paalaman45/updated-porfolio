@@ -6,10 +6,12 @@
           <div class="mx-auto max-w-2xl">
             <div class="max-w-lg">
               <h1 class="mt-10 text-pretty text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Kissel James Paalaman</h1>
-              <p class="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.</p>
+              <div class="h-14">
+                <p class="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">{{ displayedText }}<span class="cursor">|</span></p>
+              </div>
               <div class="mt-10 flex items-center gap-x-6">
                 <a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Documentation</a>
-                <a href="#" class="text-sm/6 font-semibold text-gray-900">View on GitHub <span aria-hidden="true">→</span></a>
+                <a href="https://github.com/paalaman45" class="text-sm/6 font-semibold text-gray-900">View on GitHub <span aria-hidden="true">→</span></a>
               </div>
             </div>
           </div>
@@ -47,12 +49,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
 
-const show = ref(true);
+  const show = ref(true);
 
-// Manually add color classes to specific parts of the code
-const highlightedCode = ref(`<span class="text-red-400">&lt;template&gt;</span>
+  // Manually add color classes to specific parts of the code
+  const highlightedCode = ref(`<span class="text-red-400">&lt;template&gt;</span>
   <span class="text-red-400">&lt;section</span> <span class="text-purple-400">class</span><span class="text-blue-400">="hero bg-gray-200"</span><span class="text-red-400">&gt;</span>
     <span class="text-red-400">&lt;div</span> <span class="text-purple-400">class</span><span class="text-blue-400">="hero-content text-center"</span><span class="text-red-400">&gt;</span>
       <span class="text-red-400">&lt;h1</span> <span class="text-purple-400">class</span><span class="text-blue-400">="text-4xl font-bold mb-4"</span><span class="text-red-400">&gt;</span><span class="text-gray-300">{{ welcomeMsg }}</span><span class="text-red-400">&lt;/h1&gt;</span>
@@ -63,4 +65,59 @@ const highlightedCode = ref(`<span class="text-red-400">&lt;template&gt;</span>
 <span class="text-red-400">&lt;script setup&gt;</span>
   <span class="text-purple-400">const</span><span class="text-gray-300"> welcomeMsg = </span></span><span class="text-green-400">"Welcome to Kissel James Portfolio"</span>;
 <span class="text-red-400">&lt;/script&gt;</span>`);
+
+  const texts = ref([
+    "Expert Web Development and Server Solutions.",
+    "Crafting Efficient, Secure, and Scalable Solutions.",
+    "Expertise in creating responsive designs and managing complex server configurations."
+  ]);
+
+  const displayedText = ref("");
+  let currentIndex = 0;
+
+  const typeText = () => {
+    let index = 0;
+    const interval = setInterval(() => {
+      displayedText.value += texts.value[currentIndex][index];
+      index++;
+
+      // Clear interval when the full text is typed
+      if (index === texts.value[currentIndex].length) {
+        clearInterval(interval);
+        setTimeout(deleteText, 3000); // Wait 3 seconds before deleting
+      }
+    }, 30); // Typing speed
+  };
+
+  const deleteText = () => {
+    let index = displayedText.value.length;
+    const interval = setInterval(() => {
+      displayedText.value = displayedText.value.slice(0, index - 1);
+      index--;
+
+      // Clear interval when the text is fully deleted
+      if (index === 0) {
+        clearInterval(interval);
+        currentIndex = (currentIndex + 1) % texts.value.length; // Move to the next text
+        typeText(); // Start typing the next text
+      }
+    }, 10); // Deleting speed
+  };
+
+  onMounted(() => {
+    typeText();
+  });
 </script>
+
+<style scoped>
+.cursor {
+  animation: blink 1s step-end infinite;
+  font-weight: 100;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+</style>

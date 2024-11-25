@@ -21,7 +21,15 @@
 
 <script>
   import {
-    ClassicEditor, Bold, Italic, Essentials, Paragraph, Undo, Heading, FontColor, FontBackgroundColor, Link, Image, ImageToolbar, ImageCaption, ImageStyle, ImageUpload, Alignment, List, Table, TableToolbar, BlockQuote
+    ClassicEditor,
+    Bold,
+    Essentials,
+    Heading,
+    Italic,
+    Paragraph,
+    List,
+    Plugin,
+    ButtonView
   } from 'ckeditor5';
   import { Ckeditor } from '@ckeditor/ckeditor5-vue';
 
@@ -40,7 +48,17 @@
         editor: ClassicEditor,
         editorData: '',
         editorConfig: {
-          plugins: [Essentials, Bold, Italic, Paragraph, Undo, Heading, FontColor, FontBackgroundColor, Link, Image, ImageToolbar, ImageCaption, ImageStyle, ImageUpload, Alignment, List, Table, TableToolbar, BlockQuote],
+          plugins: [
+            ClassicEditor,
+            Bold,
+            Essentials,
+            Heading,
+            Italic,
+            Paragraph,
+            List,
+            Plugin,
+            ButtonView
+          ],
           toolbar: [
             'undo', 'redo', '|',
             'heading', '|',

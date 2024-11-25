@@ -3,7 +3,7 @@
     <div class="mx-auto max-w-3xl">
       <h2 class="text-center mb-5 text-3xl font-medium">Create Blog</h2>
       <div class="w-full">
-        <input type="text" name="title" id="title" class="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" placeholder="Blog Title" />
+        <input v-model="BlogTitle" type="text" name="title" id="title" class="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" placeholder="Blog Title" />
       </div>
       <div id="app" class="h-fit">
         <div class="mt-2">
@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="flex justify-end mt-2">
-        <button @click="logEditorData" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button @click="saveBlog" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Publish
         </button>
       </div>
@@ -21,30 +21,13 @@
 
 <script>
   import {
-    ClassicEditor,
-    Bold,
-    Italic,
-    Essentials,
-    Paragraph,
-    Undo,
-    Heading,
-    FontColor,
-    FontBackgroundColor,
-    Link,
-    Image,
-    ImageToolbar,
-    ImageCaption,
-    ImageStyle,
-    ImageUpload,
-    Alignment,
-    List,
-    Table,
-    TableToolbar,
-    BlockQuote
+    ClassicEditor, Bold, Italic, Essentials, Paragraph, Undo, Heading, FontColor, FontBackgroundColor, Link, Image, ImageToolbar, ImageCaption, ImageStyle, ImageUpload, Alignment, List, Table, TableToolbar, BlockQuote
   } from 'ckeditor5';
   import { Ckeditor } from '@ckeditor/ckeditor5-vue';
 
   import 'ckeditor5/ckeditor5.css';
+  import { collection, addDoc } from 'firebase/firestore';
+  import { db } from '@/firebase/firebase.js';
 
   export default {
     name: 'app',
@@ -53,30 +36,11 @@
     },
     data() {
       return {
+        BlogTitle: "",
         editor: ClassicEditor,
         editorData: '',
         editorConfig: {
-          plugins: [
-            Essentials,
-            Bold,
-            Italic,
-            Paragraph,
-            Undo,
-            Heading,
-            FontColor,
-            FontBackgroundColor,
-            Link,
-            Image,
-            ImageToolbar,
-            ImageCaption,
-            ImageStyle,
-            ImageUpload,
-            Alignment,
-            List,
-            Table,
-            TableToolbar,
-            BlockQuote
-          ],
+          plugins: [Essentials, Bold, Italic, Paragraph, Undo, Heading, FontColor, FontBackgroundColor, Link, Image, ImageToolbar, ImageCaption, ImageStyle, ImageUpload, Alignment, List, Table, TableToolbar, BlockQuote],
           toolbar: [
             'undo', 'redo', '|',
             'heading', '|',
@@ -135,9 +99,19 @@
       };
     },
     methods: {
-      logEditorData() {
-        console.log(this.editorData);
-        
+      async saveBlog(){
+        try{
+          const BlogData = {
+            title: this.BlogTitle,
+            content: this.editorData,
+            date: new Date().toISOString()
+          }
+          const projectListRef = collection(db, "blogs");
+          const docRef = await addDoc(projectListRef,BlogData);
+          console.log("Blog Successfully Added:", docRef.id);
+        }catch(error){
+          console.log(error);
+        }
       }
     }
   };

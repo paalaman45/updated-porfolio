@@ -16,7 +16,7 @@
 						<a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum"></a>
 						<a rel="noopener noreferrer" href="" class="text-xs tracking-wider uppercase hover:underline dark:text-violet-600">{{ project.project_Type }}</a>
 						<a target="_blank" :href="project.project_Link"><h3 class="hover:underline flex-1 py-2 text-lg font-semibold leading-snug">{{ project.project_Name }}</h3></a>
-            
+
 						<!-- <div class="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-600" bis_skin_checked="1">
 							<span>June 1, 2020</span>
 							<span>2.1K views</span>

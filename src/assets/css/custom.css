@@ -16,13 +16,13 @@
 
 .content ul {
 list-style-type: disc; /* Disc bullets for top-level list */
-margin-left: 1.5rem;
+    margin-left: 1.5rem;
 }
 
 /* Style all nested <ul> elements (directly inside <li>) */
 .content ul ul {
 list-style-type: circle; /* Circle bullets for first-level nested lists */
-margin-left: 1.5rem;
+    margin-left: 1.5rem;
 }
 
 /* Style deeper nested <ul> elements */
@@ -31,10 +31,19 @@ list-style-type: square; /* Square bullets for deeper nested lists */
 margin-left: 1.5rem;
 }
 
+.content p {
+    margin-bottom: 10px;
+}
+
+.content ul {
+    margin-bottom: 10px;
+}
+
 .highlight.js-code-highlight{
     background-color: #08090a;
     padding: 1.5rem !important;
     border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .highlight .hll {

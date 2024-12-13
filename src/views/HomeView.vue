@@ -3,6 +3,7 @@
   import HomeHero from '@/components/hero/HomeHero.vue';
   import Projects from '@/components/projects/Projects.vue';
   import About from '@/components/about/About.vue';
+  import Blogs from '@/components/blog/Blogs.vue';
   import MainFooter from '@/components/footer/Footer.vue'
 </script>
 
@@ -11,5 +12,6 @@
   <HomeHero />
   <About />
   <Projects />
+  <Blogs />
   <MainFooter />
 </template>
